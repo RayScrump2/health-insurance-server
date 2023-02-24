@@ -1,14 +1,25 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname + '/client'))
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
-const port = process.env.PORT || 3000
-app.get('/test', function(request, response) {
-	response.type('text/plain')
-	response.send('Node.js and Express running on port='+port)
-})
+app.post('/api/data', (req, res) => {
+  try {
+    const { number1, number2 } = req.body;
+    const result = Number(number1) + Number(number2);
+    res.status(200).send(`The sum of ${number1} and ${number2} is ${result}.`);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-app.listen(port, function() {
-	console.log("Server is running at http://localhost:3000/")
-})
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
