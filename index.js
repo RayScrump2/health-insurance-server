@@ -1,59 +1,58 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+app = express()
+var url = require('url');
 
-const app = express();
+const port = process.env.PORT || 3000
+app.use(cors())
 
-const port = process.env.PORT || 3000; // This will be the port that the server is listening on - Brian
+// Use Express to publish static HTML, CSS, and JavaScript files that run in the browser. 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// calculate
+app.get('/calculate', (req, res) => {
+	// Console message
+	console.log('Calling /calculate on Node.js server...')
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+	// Getting the data from the queryString
+	var data = url.parse(req.url, true).query
+	
+	// Parsing the data from the queryString so we can use it
+	let age = parseInt(data.age)
+	let height = parseInt(data.height)
+	let weight = parseInt(data.weight)
+	let sysBloodPressure = parseInt(data.sysBloodPressure)
+	let diaBloodPressure = parseInt(data.diaBloodPressure)
+	// TODO: add cancer, alzherimers, diabetes
+	let sum = `Sum of age, height, and weight: ${age+height+weight}`
+	res.type('text/plain')
+	res.send(sum.toString())
+	
 });
 
+// Implement a custom About page.
+app.get('/about', (request, response) => {
+	console.log('Calling "/about" on the Node.js server.')
+	response.type('text/plain')
+	response.send('About Node.js on Azure Template.')
+})
 
-// This will get the data from the client to do the calculations with
-app.post('/api/data', (req, res) => {
-  let points = 0;
-  const { age, height, weight, sysBloodPressure, diaBloodPressure} = req.body;
+// Custom 404 page.
+app.use((request, response) => {
+  response.type('text/plain')
+  response.status(404)
+  response.send('404 - Not Found')
+})
 
-  // converting values
-  let weightInKG = Number(weight) * 0.45359237;
-  let meters = Number(height) * 0.0254;
-  let bmi = weightInKG / meters**2;
+// Custom 500 page.
+app.use((err, request, response, next) => {
+  console.error(err.message)
+  response.type('text/plain')
+  response.status(500)
+  response.send('500 - Server Error')
+})
 
-  // adding points for each function
-  points += agePoints(Number(age)); // calculating age points
-  points += bmiPoints(Number(bmi)); // calculating bmi points
-  res.status(200).send(`The number of points is ${points}.`); // sending results back to the client **NEED TO MAKE IT SO IT DOESN'T REFRESH CLIENT PAGE**
-});
-
-// Function for calculating points for age 
-function agePoints(age) {
-  // Will return a certain amount of points depending on their age
-  if (age < 30) {
-    return 0;
-  } else if (age >= 30 && age < 45) {
-    return 10;
-  } else if (age >= 45 && age < 60) {
-    return 20;
-  } else {
-    return 30;
-  }
-}
-
-// Function for calculating BMI points
-function bmiPoints(bmi) {
-  // checking bmi levels 
-  if (bmi >= 18.5 && bmi < 25.0) {
-    return 0;
-  } else if (bmi >= 25.0 && bmi < 30.0) {
-    return 30;
-  } else {
-    return 75;
-  }
-}
-
-app.listen(port, () => {
-  console.log(`Server started on port ${port}...`);
-});
+app.listen(port, () => console.log(
+  `Express started at \"http://localhost:${port}\"\n` +
+  `press Ctrl-C to terminate.`)
+)
