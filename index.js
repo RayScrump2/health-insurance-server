@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 app = express()
-var url = require('url');
+var url = require('url')
 
 const port = process.env.PORT || 3000
 app.use(cors())
@@ -18,16 +18,46 @@ app.get('/calculate', (req, res) => {
 	var data = url.parse(req.url, true).query
 	
 	// Parsing the data from the queryString so we can use it
+	let sum = 0
 	let age = parseInt(data.age)
 	let height = parseInt(data.height)
 	let weight = parseInt(data.weight)
 	let sysBloodPressure = parseInt(data.sysBloodPressure)
 	let diaBloodPressure = parseInt(data.diaBloodPressure)
+	let bmi = (weight * 0.45359237) / (height * 0.0254)**2
 	// TODO: add cancer, alzherimers, diabetes
-	let sum = `Sum of age, height, and weight: ${age+height+weight}`
+
+	// Calculating points added based on age
+	if (age < 30){
+		sum += 0
+	} else if (age >= 30 && age < 45) {
+		sum += 10
+	} else if (age >= 45 && age < 60) {
+		sum += 20
+	} else {
+		sum += 30
+	}
+
+	// Calculating BMI
+	if (bmi >= 18.5 && bmi <= 24.9) {
+		sum += 0
+	} else if (bmi >= 25.0 && bmi <= 29.9) {
+		sum += 30
+	} else {
+		sum += 75
+	}
+
+	// Calculating the results
 	res.type('text/plain')
-	res.send(sum.toString())
-	
+	if (sum <= 20) {
+		res.send(`The person has ${sum} points, meaning they is at low risk.`)
+	} else if (sum > 20 && sum <= 50) {
+		res.send(`The person has ${sum} points, meaning they is at moderate risk.`)
+	} else if (sum > 50 && sum <= 75) {
+		res.send(`The person has ${sum} points, meaning they is at high risk.`)
+	} else {
+		res.send(`The person has ${sum} points, meaning they is uninsurable.`)
+	}
 });
 
 // Implement a custom About page.
