@@ -71,12 +71,12 @@ app.get('/calculate', (req, res) => {
 	}
 });
 
-// Implement a custom About page.
-app.get('/about', (request, response) => {
-	console.log('Calling "/about" on the Node.js server.')
-	response.type('text/plain')
-	response.send('About Node.js on Azure Template.')
+// Implement a ping
+app.get('/ping', (request, response) => {
+	console.log('Established connection between Client and Server...')
+	response.send()
 })
+
 
 // Custom 404 page.
 app.use((request, response) => {
