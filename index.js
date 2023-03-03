@@ -47,6 +47,17 @@ app.get('/calculate', (req, res) => {
 		sum += 75
 	}
 
+	// Calculating Blood Pressue
+	if (sysBloodPressure >= 180 || diaBloodPressure >= 120){
+		sum += 100
+	} else if (sysBloodPressure >= 140 || diaBloodPressure >= 90){
+		sum += 75
+	} else if (sysBloodPressure >= 130 || diaBloodPressure >= 80){
+		sum += 30
+	} else if (sysBloodPressure >= 120 && diaBloodPressure < 80){
+		sum += 15
+	}
+ 
 	// Calculating the results
 	res.type('text/plain')
 	if (sum <= 20) {
