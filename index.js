@@ -66,13 +66,13 @@ app.get('/calculate', (req, res) => {
 	// Calculating the results
 	res.type('text/plain')
 	if (sum <= 20) {
-		res.send(`The person has ${sum} points, meaning they is at low risk.`)
+		res.send(`The person has ${sum} points, meaning they are at low risk.`)
 	} else if (sum > 20 && sum <= 50) {
-		res.send(`The person has ${sum} points, meaning they is at moderate risk.`)
+		res.send(`The person has ${sum} points, meaning they are at moderate risk.`)
 	} else if (sum > 50 && sum <= 75) {
-		res.send(`The person has ${sum} points, meaning they is at high risk.`)
+		res.send(`The person has ${sum} points, meaning they are at high risk.`)
 	} else {
-		res.send(`The person has ${sum} points, meaning they is uninsurable.`)
+		res.send(`The person has ${sum} points, meaning they are uninsurable.`)
 	}
 });
 
