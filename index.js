@@ -28,7 +28,8 @@ app.get('/calculate', (req, res) => {
 	// TODO: add cancer, alzherimers, diabetes
 
 	// Adding cancer. alzheimers, and diabetes to receieve data from client - JB
-	let cancer = data.cancer === 'Yes' ? true : false
+	//
+   	let cancer = data.cancer === 'Yes' ? true : false
 	let alzheimers = data.alzheimers === 'Yes' ? true : false
 	let diabetes = data.diabetes === 'Yes' ? true : false
 
