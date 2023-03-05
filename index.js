@@ -7,8 +7,6 @@ var url = require('url')
 const port = process.env.PORT || 3000
 app.use(cors())
 
-// Use Express to publish static HTML, CSS, and JavaScript files that run in the browser. 
-
 // calculate
 app.get('/calculate', (req, res) => {
 	// Console message
@@ -106,19 +104,19 @@ app.get('/calculate', (req, res) => {
 	res.type('text/plain')
 	if (sum <= 20) {
 		res.send(`Points added based on age: ${agePoints}<br>Points added based on BMI: ${bmiPoints}<br>Points added based on blood pressure: ${bpPoints}<br>
-		Points added based on cancer risk: ${cancerPoints}<br>Points added based on diabetes risk: ${diabetesPoints}<br>
-		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at low risk.`)
+		Points added based on diabetes risk: ${diabetesPoints}<br>Points added based on cancer risk: ${cancerPoints}<br>
+		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at low risk`)
 	} else if (sum > 20 && sum <= 50) {
 		res.send(`Points added based on age: ${agePoints}<br>Points added based on BMI: ${bmiPoints}<br>Points added based on blood pressure: ${bpPoints}<br>
-		Points added based on cancer risk: ${cancerPoints}<br>Points added based on diabetes risk: ${diabetesPoints}<br>
-		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at moderate risk.`)
+		Points added based on diabetes risk: ${diabetesPoints}<br>Points added based on cancer risk: ${cancerPoints}<br>
+		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at moderate risk`)
 	} else if (sum > 50 && sum <= 75) {
 		res.send(`Points added based on age: ${agePoints}<br>Points added based on BMI: ${bmiPoints}<br>Points added based on blood pressure: ${bpPoints}<br>
-		Points added based on cancer risk: ${cancerPoints}<br>Points added based on diabetes risk: ${diabetesPoints}<br>
-		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at high risk.`)
+		Points added based on diabetes risk: ${diabetesPoints}<br>Points added based on cancer risk: ${cancerPoints}<br>
+		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are at high risk`)
 	} else {
 		res.send(`Points added based on age: ${agePoints}<br>Points added based on BMI: ${bmiPoints}<br>Points added based on blood pressure: ${bpPoints}<br>
-		Points added based on cancer risk: ${cancerPoints}<br>Points added based on diabetes risk: ${diabetesPoints}<br>
+		Points added based on diabetes risk: ${diabetesPoints}<br>Points added based on cancer risk: ${cancerPoints}<br>
 		Points added based on alzheimers risk: ${alzPoints}<br>The person's total points is ${sum}, meaning they are uninsurable`)
 	}
 });
