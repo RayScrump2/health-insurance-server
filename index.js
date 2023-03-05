@@ -26,6 +26,7 @@ app.get('/calculate', (req, res) => {
 	let bmi = (weight * 0.45359237) / (height * 0.0254)**2
 
 	// Adding cancer. alzheimers, and diabetes to receieve data from client - JB
+	//
 	let cancer = data.cancer === 'Yes' ? true : false
 	let alzheimers = data.alzheimers === 'Yes' ? true : false
 	let diabetes = data.diabetes === 'Yes' ? true : false
