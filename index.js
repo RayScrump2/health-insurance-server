@@ -1,11 +1,9 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 app = express()
 var url = require('url')
 
-const port = process.env.PORT || 3000
-app.use(cors())
+app.use(cors());
 
 // calculate
 app.get('/calculate', (req, res) => {
@@ -19,20 +17,16 @@ app.get('/calculate', (req, res) => {
 	let sum = 0
 	let agePoints, bmiPoints, bpPoints, cancerPoints, diabetesPoints, alzPoints
 	let age = parseInt(data.age)
-	let height = parseInt(data.height)
+	let feet = parseInt(data.feet)
+	let inches = parseInt(data.inches)
 	let weight = parseInt(data.weight)
 	let sysBloodPressure = parseInt(data.sysBloodPressure)
 	let diaBloodPressure = parseInt(data.diaBloodPressure)
+	let height = (feet * 12) + inches
 	let bmi = (weight * 0.45359237) / (height * 0.0254)**2
 
 	// Adding cancer. alzheimers, and diabetes to receieve data from client - JB
-<<<<<<< HEAD
-	// // 
    	let cancer = data.cancer === 'Yes' ? true : false
-=======
-	//
-	let cancer = data.cancer === 'Yes' ? true : false
->>>>>>> 357508513bb3adabff879de922c1ff94bda7e8b6
 	let alzheimers = data.alzheimers === 'Yes' ? true : false
 	let diabetes = data.diabetes === 'Yes' ? true : false
 
@@ -148,6 +142,8 @@ app.use((err, request, response, next) => {
   response.status(500)
   response.send('500 - Server Error')
 })
+
+const port = process.env.PORT || 3000
 
 app.listen(port, () => console.log(
   `Express started at \"http://localhost:${port}\"\n` +
